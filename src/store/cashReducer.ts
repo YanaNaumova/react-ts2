@@ -1,7 +1,7 @@
 export interface IState{
   cash:number;
 }
-interface IAction{
+export interface IAction{
   type:string;
   payload:number;
 }
@@ -9,6 +9,7 @@ interface IAction{
 const defaultState:IState={
   cash:0,
 }
+
 
 export const cashReducer=(state=defaultState,action:IAction)=>{
   switch (action.type){

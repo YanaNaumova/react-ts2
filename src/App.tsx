@@ -3,10 +3,26 @@ import './App.css';
 import {useDispatch, useSelector} from "react-redux";
 import {addCustomerAction, removeCustomerAction} from "./store/customerReducer";
 
+interface ICustomer{
+  name:string,
+  id:number;
+}
+interface ICash{
+  cash:{
+    cash:number;
+  }
+}
+interface ICustomer{
+  customers: {
+    customers: []
+  }
+}
+
 function App() {
   const dispatch = useDispatch()
-  const cash = useSelector((state: any) => state.cash.cash)
-  const customers=useSelector((state:any)=> state.customers.customers)
+  const cash = useSelector((state:ICash) => state.cash.cash)
+
+  const customers=useSelector((state:ICustomer)=> state.customers.customers)
 
   const addCash = (cash:number) => {
     dispatch({type: "ADD_CASH", payload:cash})
@@ -14,15 +30,17 @@ function App() {
   const getCash = (cash:number) => {
     dispatch({type: "GET_CASH", payload:cash})
   }
-const addCustomer=(name:any)=>{
+
+
+const addCustomer=(name:string)=>{
     const customer={
       name,
       id:Date.now(),
     }
     dispatch(addCustomerAction(customer))
 }
-console.log(customers)
-const removeCustomer=(customer:any)=>{
+
+const removeCustomer=(customer:ICustomer)=>{
 dispatch(removeCustomerAction(customer.id))
 }
 
@@ -38,8 +56,8 @@ dispatch(removeCustomerAction(customer.id))
       </div>
       {customers.length>0?
         <div>
-          {customers.map((e:any)=>
-            <div onClick={()=>removeCustomer(e)} style={{fontSize:"2rem", border:'1px solid black', padding:"10px",marginTop:5}}>{e.name}</div>
+          {customers.map((e:ICustomer,index:number)=>
+            <div key={index} onClick={()=>removeCustomer(e)} style={{fontSize:"2rem", border:'1px solid black', padding:"10px",marginTop:5}}>{e.name}</div>
           )}
         </div>
         :

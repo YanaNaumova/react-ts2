@@ -1,13 +1,24 @@
+export interface IAction{
+  type:string;
+  payload:number;
+}
 
-const defaultState:any={
+interface ICustomer{
+  name:string,
+  id:number;
+}
+export interface IState{
+  customers:[];
+}
+
+const defaultState:IState={
   customers:[],
 }
 
 const addCustomer='ADD_CUSTOMER'
 const removeCustomer="REMOVE_CUSTOMER"
 
-
-export const customerReducer=(state=defaultState,action:any)=>{
+export const customerReducer=(state=defaultState,action:IAction)=>{
   switch (action.type){
     case addCustomer:
       return{
@@ -17,7 +28,7 @@ export const customerReducer=(state=defaultState,action:any)=>{
     case removeCustomer:
       return{
         ...state,
-        customers:[...state.customers.filter((customer:any)=>customer.id!==action.payload)]
+        customers:[...state.customers.filter((customer:ICustomer)=>customer.id!==action.payload)]
       }
     default:
       return state
@@ -25,9 +36,9 @@ export const customerReducer=(state=defaultState,action:any)=>{
 
 }
 
-export const addCustomerAction=(payload:any)=>({
+export const addCustomerAction=(payload:ICustomer)=>({
   type:addCustomer,payload
 })
-export const removeCustomerAction=(payload:any)=>({
+export const removeCustomerAction=(payload:number)=>({
   type:removeCustomer, payload
 })
