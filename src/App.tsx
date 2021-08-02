@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import {useDispatch, useSelector} from "react-redux";
 import {addCustomerAction, removeCustomerAction} from "./store/customerReducer";
+import {fetchCustomers} from "./asyncActions/customers";
 
 interface ICustomer{
   name:string,
@@ -52,7 +53,7 @@ dispatch(removeCustomerAction(customer.id))
         <button onClick={() => addCash(Number(prompt()))}>Пополнить счет</button>
         <button onClick={() => getCash(Number(prompt()))}> Снять со счета</button>
         <button onClick={() => addCustomer(String(prompt()))}>Добавить клиента</button>
-        <button onClick={() => getCash(Number(prompt()))}>Удалить клиента</button>
+        <button onClick={() => dispatch(fetchCustomers())}>Получаем клиента из базы</button>
       </div>
       {customers.length>0?
         <div>
